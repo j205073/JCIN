@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>大地還原生物科技 管理系統</title>
+    <link rel="stylesheet" href="~/Content/css/vendor/w3.css">
+    <link rel="stylesheet" href="~/Content/css/vendor/open-iconic.css">
+    <link rel="stylesheet" href="~/Content/css/sys.css">
+
+    @* 引用 jQuery *@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+    @RenderSection("IncludeCSS", false)
+</head>
+
+<body class="@ViewBag.BodyClass">
+    <div id="wrapper">
+        @if (ViewBag.IsFirstPage)
+        {
+
+        }
+        else
+        {
+            if (Convert.ToString(Session["IsLogined"]) != "Y")
+            {
+                Response.Redirect(Url.Content("~/Manage/Login"));
+            }
+            else
+            {
+                <header id="header" class="navbar navbar-fixed-top navbar-dark bg-primary">
+                    <h1 class="logo">
+                        <a class="navbar-brand" href="@Url.Content("~/Manage")" title="回登入首頁" tabindex="-1">大地還原生物科技 管理系統</a>
+                    </h1><!-- logo -->
+                    <ul class="nav navbar-nav pull-xs-right">
+                        <li class="nav-item">
+                            <span class="nav-link oi" data-glyph="person">
+                                登入身分: @Convert.ToString(Session["account"])
+                            </span>
+                        </li>
+                        <li class="nav-item bg-warning">
+                            <a href="@Url.Content("~/Home")" class="nav-link oi" data-glyph="home">
+                                回首頁
+                            </a>
+                        </li>
+                        <li class="nav-item bg-success">
+                            <a href="@Url.Content("~/Manage/Logout")" class="nav-link oi" data-glyph="power-standby">
+                                登出
+                            </a>
+                        </li>
+                    </ul>
+                </header><!-- header //-->
+            }
+        }
+        <main id="main">
+
+            @if (ViewBag.IsFirstPage)
+            {
+                @RenderBody()
+            }
+            else
+            {
+                <div id="content">
+                    <ul class="breadcrumb">
+                        @RenderSection("Breadcrumb", false)
+                    </ul>
+                    @RenderBody()
+                </div><!-- content //-->
+
+                <aside id="sidebar">
+                    <h3 class="h3"><i class="oi" data-glyph="menu"></i>功能選單 MENU</h3>
+
+                    <header class="collapse-toggle oi @(ViewBag.nav == "n1" ? "current" : "")" data-glyph="folder">產品資料維護</header>
+                    <nav class="collapse-content @(ViewBag.nav == "n1" ? "in" : "")">
+                        <a href="~/Manage/ProductList" class="@(ViewBag.SubNav == "n1-1" ? "current" : "")"><i>&#8227;</i>產品資料 管理</a>
+                    </nav>
+
+                    <header class="collapse-toggle oi @(ViewBag.nav == "n2" ? "current" : "")" data-glyph="flag">海外實績維護</header>
+                    <nav class="collapse-content @(ViewBag.nav == "n2" ? "in" : "")">
+                        <a href="~/Manage/ResultsKind1" class="@(ViewBag.SubNav == "n2-1" ? "current" : "")"><i>&#8227;</i>主分類(國別) 管理</a>
+                        <a href="~/Manage/ResultsKind2" class="@(ViewBag.SubNav == "n2-2" ? "current" : "")"><i>&#8227;</i>次分類(省) 管理</a>
+                        <a href="~/Manage/ResultsList" class="@(ViewBag.SubNav == "n2-3" ? "current" : "")"><i>&#8227;</i>實績專案 管理</a>
+                    </nav>
+
+                    <a href="~/Manage/ResultsPair" class="oi @(ViewBag.nav == "n5" ? "current" : "")" data-glyph="book">海外實績與產品配對</a>
+
+                    <header class="collapse-toggle oi @(ViewBag.nav == "n3" ? "current" : "")" data-glyph="info">網站資訊維護</header>
+                    <nav class="collapse-content @(ViewBag.nav == "n3" ? "in" : "")">
+                        <a href="~/Manage/NewsList" class="@(ViewBag.SubNav == "n3-1" ? "current" : "")"><i>&#8227;</i>最新消息 管理</a>
+                        @*<a href="~/Manage/Certificate" class="@(ViewBag.SubNav == "n3-2" ? "current" : "")"><i>&#8227;</i>證照專區 編輯</a>
+                        <a href="~/Manage/Video" class="@(ViewBag.SubNav == "n3-3" ? "current" : "")"><i>&#8227;</i>影音專區 編輯</a>*@
+                        <a href="~/Manage/IndexVideo" class="@(ViewBag.SubNav == "n3-4" ? "current" : "")"><i>&#8227;</i>首頁Banner 編輯</a>
+                        <a href="~/Manage/AboutUs" class="@(ViewBag.SubNav == "n3-3" ? "current" : "")"><i>&#8227;</i>品牌故事 編輯</a>
+                        @* 目前隱藏，若客戶有需求再製作
+                        <a href="~/Manage/BranchsList" class="@(ViewBag.SubNav == "n3-4" ? "current" : "")"><i>&#8227;</i>分公司資料 管理</a> *@
+                    </nav>
+
+                    <header class="collapse-toggle oi @(ViewBag.nav == "n4" ? "current" : "")" data-glyph="cog">系統設定</header>
+                    <nav class="collapse-content @(ViewBag.nav == "n4" ? "in" : "")">
+                        <a href="~/Manage/ChangePW" class="@(ViewBag.SubNav == "n4-1" ? "current" : "")"><i>&#8227;</i>變更密碼</a>
+                        <a href="~/Manage/Tutorial" class="@(ViewBag.SubNav == "n4-2" ? "current" : "")"><i>&#8227;</i>操作影片</a>
+                    </nav>
+                </aside><!-- sidebar //-->
+            }
+
+        </main><!-- main //-->
+    </div><!-- wrapper //-->
+
+    <footer id="footer">
+        <p class="copyright text-muted">
+            Powered By <a href="http://www.jcin.com.tw" target="new">JCIN.</a>
+        </p>
+    </footer><!-- footer //-->
+
+    <script>
+        // 左選單縮放特效
+        var $collapse = $('.collapse-toggle');
+        var fall = '.collapse-content';
+
+        // 若是當前選單就加上點中(active) class
+        $collapse.siblings(".current").addClass("active");
+
+        $collapse.click(function (e) {
+            $(this).next(fall).slideToggle(200);
+            $(this).siblings().next(fall).slideUp();
+            $(this).toggleClass("active"),
+                    $collapse.not(this).removeClass("active");
+            event.preventDefault();
+        });
+    </script>
+
+    @RenderSection("IncludeScript", false)
+</body>
+</html>

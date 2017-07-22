@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<REINVOICE_DATA>
+  <Status />
+  <Message />
+  <MerchantID />
+  <MerchantOrderNo />
+  <TotalAmt />
+  <InvoiceNumber />
+  <InvoiceTransNo />
+  <RandomNum />
+  <CreateTime />
+  <Surplus />
+  <CheckCode />
+  <EndStr />
+</REINVOICE_DATA>
